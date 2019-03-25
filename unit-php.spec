@@ -1,3 +1,5 @@
+# centos/sclo spec file for unit-php, from:
+#
 # remirepo/fedora spec file for unit-php
 #
 # Copyright (c) 2019 Remi Collet
@@ -6,6 +8,30 @@
 #
 # Please, preserve the changelog entries
 #
+
+%if 0%{?scl:1}
+%scl_package       unit-php
+%global sub_prefix %{scl_prefix}
+%if "%{scl}" == "rh-php70"
+%global sub_prefix sclo-php70-
+%endif
+%if "%{scl}" == "rh-php71"
+%global sub_prefix sclo-php71-
+%endif
+%if "%{scl}" == "rh-php72"
+%global sub_prefix sclo-php72-
+%endif
+%global modname %scl
+AutoReq: 0
+# ensure correct dependencies
+Requires: %{scl_prefix}php-cli
+Requires: %{scl_prefix}php-embedded
+%else
+%global _root_bindir          %{_bindir}
+%global _root_libdir          %{_libdir}
+%global _root_sharedstatedir  %{_sharedstatedir}
+%global modname php
+%endif
 
 %global gh_owner     nginx
 %global project      unit
@@ -20,22 +46,9 @@
 # Disable auto-provides (php_plugin.so is not a library)
 AutoProv: 0
 
-%if 0%{?scl:1}
-%scl_package unit-php
-%global modname %scl
-AutoReq: 0
-# ensure correct dependencies
-Requires: %{scl_prefix}php-cli
-Requires: %{scl_prefix}php-embedded
-%else
-%global _root_libdir          %{_libdir}
-%global _root_sharedstatedir  %{_sharedstatedir}
-%global modname php
-%endif
-
-Name:          %{?scl_prefix}%{project}-php
+Name:          %{?sub_prefix}%{project}-php
 Version:       1.8.0
-Release:       1%{?dist}%{!?scl:%{!?nophptag:%(%{__php} -r 'echo ".".PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')}}
+Release:       1%{?dist}
 Summary:       PHP module for NGINX Unit
 License:       ASL 2.0
 URL:           https://unit.nginx.org/
@@ -46,6 +59,11 @@ BuildRequires: %{?dtsprefix}gcc
 BuildRequires: %{?scl_prefix}php-devel
 BuildRequires: %{?scl_prefix}php-embedded
 BuildRequires: openssl-devel
+
+%if "%{?scl_prefix}" != "%{?sub_prefix}"
+Provides:      %{?scl_prefix}%{project}-php         = %{version}-%{release}
+Provides:      %{?scl_prefix}%{project}-php%{?_isa} = %{version}-%{release}
+%endif
 
 Requires:      %{project} = %{version}
 
@@ -63,8 +81,6 @@ and NGINX unit %{version}.
 
 
 %build
-%{?dtsenable}
-
 modbuild() {
 : Main unit configuration
 ./configure \
@@ -95,8 +111,6 @@ mv build std-build
 
 
 %install
-%{?dtsenable}
-
 rm -f build
 ln -s deb-build build
 make %{modname}-install DESTDIR=%{buildroot}
@@ -117,6 +131,9 @@ make %{modname}-install DESTDIR=%{buildroot}
 
 
 %changelog
+* Sat Mar  2 2019 Remi Collet <remi@remirepo.net> - 1.8.0-1
+- cleanup for SCLo build
+
 * Sat Mar  2 2019 Remi Collet <remi@remirepo.net> - 1.8.0-1
 - update to 1.8.0
 
