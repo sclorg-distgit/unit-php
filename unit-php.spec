@@ -35,7 +35,7 @@ Requires: %{scl_prefix}php-embedded
 
 %global gh_owner     nginx
 %global project      unit
-%global gh_commit    204dfec87970bb3d5ca0508e5f4ed740bd35ebe4
+%global gh_commit    7d53cc7029a7fe1b3195c37a13ff8e83640e88ad
 %global gh_short     %(c=%{gh_commit}; echo ${c:0:7})
 
 %undefine _debugsource_packages
@@ -47,7 +47,7 @@ Requires: %{scl_prefix}php-embedded
 AutoProv: 0
 
 Name:          %{?sub_prefix}%{project}-php
-Version:       1.8.0
+Version:       1.11.0
 Release:       1%{?dist}
 Summary:       PHP module for NGINX Unit
 License:       ASL 2.0
@@ -131,6 +131,12 @@ make %{modname}-install DESTDIR=%{buildroot}
 
 
 %changelog
+* Fri Sep 20 2019 Remi Collet <remi@remirepo.net> - 1.11.0-1
+- update to 1.11.0
+
+* Fri Aug 23 2019 Remi Collet <remi@remirepo.net> - 1.10.0-1
+- update to 1.10.0
+
 * Sat Mar  2 2019 Remi Collet <remi@remirepo.net> - 1.8.0-1
 - cleanup for SCLo build
 
