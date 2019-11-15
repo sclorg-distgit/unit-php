@@ -21,6 +21,9 @@
 %if "%{scl}" == "rh-php72"
 %global sub_prefix sclo-php72-
 %endif
+%if "%{scl}" == "rh-php73"
+%global sub_prefix sclo-php73-
+%endif
 %global modname %scl
 AutoReq: 0
 # ensure correct dependencies
@@ -35,7 +38,7 @@ Requires: %{scl_prefix}php-embedded
 
 %global gh_owner     nginx
 %global project      unit
-%global gh_commit    7d53cc7029a7fe1b3195c37a13ff8e83640e88ad
+%global gh_commit    946cbd1f100da56c4ea38a1598fd86d0ee1d72f5
 %global gh_short     %(c=%{gh_commit}; echo ${c:0:7})
 
 %undefine _debugsource_packages
@@ -47,7 +50,7 @@ Requires: %{scl_prefix}php-embedded
 AutoProv: 0
 
 Name:          %{?sub_prefix}%{project}-php
-Version:       1.11.0
+Version:       1.12.0
 Release:       1%{?dist}
 Summary:       PHP module for NGINX Unit
 License:       ASL 2.0
@@ -131,6 +134,9 @@ make %{modname}-install DESTDIR=%{buildroot}
 
 
 %changelog
+* Fri Oct  4 2019 Remi Collet <remi@remirepo.net> - 1.12.0-1
+- update to 1.12.0
+
 * Fri Sep 20 2019 Remi Collet <remi@remirepo.net> - 1.11.0-1
 - update to 1.11.0
 
