@@ -2,7 +2,7 @@
 #
 # remirepo/fedora spec file for unit-php
 #
-# Copyright (c) 2019 Remi Collet
+# Copyright (c) 2019-2020 Remi Collet
 # License: CC-BY-SA
 # http://creativecommons.org/licenses/by-sa/4.0/
 #
@@ -12,9 +12,6 @@
 %if 0%{?scl:1}
 %scl_package       unit-php
 %global sub_prefix %{scl_prefix}
-%if "%{scl}" == "rh-php70"
-%global sub_prefix sclo-php70-
-%endif
 %if "%{scl}" == "rh-php72"
 %global sub_prefix sclo-php72-
 %endif
@@ -35,7 +32,7 @@ Requires: %{scl_prefix}php-embedded
 
 %global gh_owner     nginx
 %global project      unit
-%global gh_commit    2241847efbc3dfdf59f68d6a03a95aa67aa29fd7
+%global gh_commit    be8589d92580ff0bfc740f3d6b496fad411a050f
 %global gh_short     %(c=%{gh_commit}; echo ${c:0:7})
 
 %undefine _debugsource_packages
@@ -47,7 +44,7 @@ Requires: %{scl_prefix}php-embedded
 AutoProv: 0
 
 Name:          %{?sub_prefix}%{project}-php
-Version:       1.13.0
+Version:       1.14.0
 Release:       1%{?dist}
 Summary:       PHP module for NGINX Unit
 License:       ASL 2.0
@@ -131,6 +128,9 @@ make %{modname}-install DESTDIR=%{buildroot}
 
 
 %changelog
+* Thu Jan  2 2020 Remi Collet <remi@remirepo.net> - 1.14.0-1
+- update to 1.14.0
+
 * Fri Nov 15 2019 Remi Collet <remi@remirepo.net> - 1.13.0-1
 - update to 1.13.0
 
