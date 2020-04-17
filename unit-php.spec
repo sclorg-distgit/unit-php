@@ -32,7 +32,7 @@ Requires: %{scl_prefix}php-embedded
 
 %global gh_owner     nginx
 %global project      unit
-%global gh_commit    e6bb4c54932a329ff8bc76bf97b36bebeceb428f
+%global gh_commit    4d62989f5c2329bb4a6174e4b7fb4ab6d8d9ec9f
 %global gh_short     %(c=%{gh_commit}; echo ${c:0:7})
 
 %undefine _debugsource_packages
@@ -44,7 +44,7 @@ Requires: %{scl_prefix}php-embedded
 AutoProv: 0
 
 Name:          %{?sub_prefix}%{project}-php
-Version:       1.15.0
+Version:       1.17.0
 Release:       1%{?dist}
 Summary:       PHP module for NGINX Unit
 License:       ASL 2.0
@@ -128,6 +128,9 @@ make %{modname}-install DESTDIR=%{buildroot}
 
 
 %changelog
+* Fri Apr 17 2020 Remi Collet <remi@remirepo.net> - 1.17.0-1
+- update to 1.17.0
+
 * Fri Feb  7 2020 Remi Collet <remi@remirepo.net> - 1.15.0-1
 - update to 1.15.0
 
